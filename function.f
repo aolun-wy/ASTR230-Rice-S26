@@ -1,0 +1,52 @@
+      PROGRAM FUNCTION
+C     THIS PROGRAM CALCULATES VOLUME DIFFERENCE USING BOTH 
+C     A SUBROUTINE AND A FUNCTION.
+      
+      DOUBLE PRECISION R1, R2, V1, V2, DIFFS, DIFFF
+C     IMPORTANT: YOU MUST DECLARE THE FUNCTION TYPE IN THE MAIN PROGRAM
+      DOUBLE PRECISION VOLFCN
+
+      WRITE(*,100)
+100   FORMAT(' ENTER RADIUS OF TWO SPHERES: ')
+      READ(*,*) R1, R2
+
+C     --- METHOD 1: SUBROUTINE ---
+C     SUBROUTINES ARE CALLED; THEY STORE THE RESULT IN V1 AND V2
+      CALL VOLSUB(R1, V1)
+      CALL VOLSUB(R2, V2)
+      DIFFS = ABS(V1 - V2)
+
+C     --- METHOD 2: FUNCTION ---
+C     FUNCTIONS ARE USED IN-LINE LIKE MATH EQUATIONS
+      DIFFF = ABS(VOLFCN(R1) - VOLFCN(R2))
+
+      WRITE(*,110) DIFFS
+      WRITE(*,120) DIFFF
+
+110   FORMAT(' DIFFERENCE (SUBROUTINE): ', F12.4)
+120   FORMAT(' DIFFERENCE (FUNCTION):   ', F12.4)
+
+      STOP
+      END PROGRAM FUNCTION
+
+C     ----------------------------------------------------------
+C     SUBROUTINE DEFINITION
+C     ----------------------------------------------------------
+      SUBROUTINE VOLSUB(RAD, VOL)
+      DOUBLE PRECISION RAD, VOL, PI
+      PARAMETER (PI=3.141592653589793D0)
+
+      VOL = (4.0D0/3.0D0) * PI * (RAD**3)
+      RETURN
+      END
+
+C     ----------------------------------------------------------
+C     FUNCTION DEFINITION
+C     ----------------------------------------------------------
+      DOUBLE PRECISION FUNCTION VOLFCN(RAD)
+      DOUBLE PRECISION RAD, PI
+      PARAMETER (PI=3.141592653589793D0)
+
+      VOLFCN = (4.0D0/3.0D0) * PI * (RAD**3)
+      RETURN
+      END
